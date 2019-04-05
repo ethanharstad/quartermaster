@@ -74,17 +74,38 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Widget> _buildActionsTiles() {
+    return List.generate(10, (index) {
+      return Card(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.event),
+            Text('Action $index'),
+          ],
+        )
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quartermaster'),
+        title: Row(
+          children: <Widget>[
+            Icon(Icons.whatshot),
+            SizedBox(width: 5),
+            Text('Home'),
+          ],
+        ),
       ),
-      body: Center(
-          child: Icon(
-            Icons.whatshot,
-            size: 128.0,
-          )
+      body: GridView.extent(
+        maxCrossAxisExtent: 150,
+        padding: const EdgeInsets.all(4),
+        mainAxisSpacing: 4,
+        crossAxisSpacing: 4,
+        children: _buildActionsTiles(),
       ),
     );
   }

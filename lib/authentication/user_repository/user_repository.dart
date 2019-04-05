@@ -16,7 +16,7 @@ class UserRepository {
     return _auth.signOut();
   }
 
-  Future<String> getUser() async {
-    return (await _auth.currentUser()).displayName;
+  Future<FirebaseUser> getUser() async {
+    return _auth.currentUser();
   }
 }
