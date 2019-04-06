@@ -23,7 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Center(
         child: BlocProvider(
           bloc: widget.loginBloc,
-          child: Column(
+          child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
             children: <Widget>[
               TextField(
                 maxLines: 1,
