@@ -75,7 +75,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Widget> _buildActionsTiles() {
-    return List.generate(10, (index) {
+    return List.generate(9, (index) {
       return Card(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -90,23 +90,35 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: <Widget>[
-            Icon(Icons.whatshot),
-            SizedBox(width: 5),
-            Text('Home'),
-          ],
-        ),
-      ),
-      body: GridView.extent(
-        maxCrossAxisExtent: 150,
-        padding: const EdgeInsets.all(4),
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 4,
-        children: _buildActionsTiles(),
-      ),
+    AuthenticationBloc authBloc = BlocProvider.of<AuthenticationBloc>(context);
+    return BlocBuilder(
+      bloc: authBloc,
+      builder: (BuildContext context, AuthenticationState state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Row(
+              children: <Widget>[
+                Icon(Icons.whatshot),
+                SizedBox(width: 5),
+                Text('Dashboard'),
+              ],
+            ),
+          ),
+          body: Column(
+            children: <Widget>[
+              Text('Welcome, ${(state as Authenticated).name}'),
+              GridView.extent(
+                shrinkWrap: true,
+                maxCrossAxisExtent: 150,
+                padding: const EdgeInsets.all(4),
+                mainAxisSpacing: 4,
+                crossAxisSpacing: 4,
+                children: _buildActionsTiles(),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

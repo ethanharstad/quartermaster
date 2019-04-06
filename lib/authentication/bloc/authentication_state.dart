@@ -13,8 +13,9 @@ class Uninitialized extends AuthenticationState {
 
 class Authenticated extends AuthenticationState {
   final String uid;
+  final String name;
 
-  Authenticated(this.uid) : super([uid]);
+  Authenticated({this.uid, this.name}) : super([uid, name]);
 
   @override
   String toString() => 'Authenticated { uid: $uid }';

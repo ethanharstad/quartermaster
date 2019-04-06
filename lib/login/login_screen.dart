@@ -3,12 +3,18 @@ import 'package:meta/meta.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quartermaster/login/login.dart';
 
-class LoginScreen extends StatelessWidget {
-  final LoginBloc _loginBloc;
+class LoginScreen extends StatefulWidget {
+  final LoginBloc loginBloc;
+
+  LoginScreen({@required this.loginBloc});
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   String _email;
   String _password;
-
-  LoginScreen({@required LoginBloc loginBloc}) : assert(loginBloc != null), _loginBloc = loginBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +22,7 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(title: Text('Login')),
       body: Center(
         child: BlocProvider(
-          bloc: _loginBloc,
+          bloc: widget.loginBloc,
           child: Column(
             children: <Widget>[
               TextField(
@@ -46,7 +52,7 @@ class LoginScreen extends StatelessWidget {
               RaisedButton(
                 child: Text('Sign In'),
                 onPressed: () {
-                  _loginBloc.dispatch(LoginPressed(email: _email, password: _password));
+                  widget.loginBloc.dispatch(LoginPressed(email: _email, password: _password));
                 },
               )
             ],
