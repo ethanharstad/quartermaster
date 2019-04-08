@@ -29,18 +29,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
       builder: (BuildContext context, AuthenticationState state) {
         return Scaffold(
           appBar: AppBar(
-            title: Row(
-              children: <Widget>[
-                Icon(Icons.whatshot),
-                SizedBox(width: 5),
-                Text('Dashboard'),
-              ],
-            ),
+            title: Text('Dashboard'),
           ),
           drawer: AppDrawer(),
           body: Column(
             children: <Widget>[
-              Text('Welcome, ${(state as Authenticated).name}'),
+              Text('Welcome, ${(state as Authenticated).uid}'),
               GridView.extent(
                 shrinkWrap: true,
                 maxCrossAxisExtent: 150,

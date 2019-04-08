@@ -9,7 +9,10 @@ void showNotImplementedDialog(BuildContext context) {
           content: Text('Sorry, this feature is not implemented yet.'),
           actions: <Widget>[
             RaisedButton(
-              child: Text('Ok'),
+              child: Text(
+                'Ok',
+                style: Theme.of(context).primaryTextTheme.button,
+              ),
               onPressed: () => Navigator.of(context).pop(),
             )
           ],
