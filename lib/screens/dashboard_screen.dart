@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quartermaster/authentication/authentication.dart';
+import 'package:quartermaster/widgets/app_drawer.dart';
 
 class DashboardScreen extends StatefulWidget {
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -11,13 +12,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return List.generate(9, (index) {
       return Card(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(Icons.event),
-              Text('Action $index'),
-            ],
-          )
-      );
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(Icons.event),
+          Text('Action $index'),
+        ],
+      ));
     });
   }
 
@@ -37,6 +37,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ],
             ),
           ),
+          drawer: AppDrawer(),
           body: Column(
             children: <Widget>[
               Text('Welcome, ${(state as Authenticated).name}'),
