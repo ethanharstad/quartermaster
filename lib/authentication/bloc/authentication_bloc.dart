@@ -9,6 +9,7 @@ import 'package:quartermaster/authentication/user.dart';
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository _userRepository;
+  UserModel user;
 
   AuthenticationBloc({@required UserRepository userRepository})
       : assert(userRepository != null),
@@ -24,10 +25,12 @@ class AuthenticationBloc
     if (event is AppStarted) {
       yield* _mapAppStartedToState();
     }
+    if (event is Authorized) {
+      yield Authenticated(user: user, organizations: event.organizations);
+    }
     if (event is Login) {
       final user = await _userRepository.getUser();
       yield* _handleLogin(user.uid);
-      // yield Authenticated(uid: user.uid);
     }
     if (event is Logout) {
       yield* _mapLogoutToState();
@@ -40,7 +43,6 @@ class AuthenticationBloc
       if (isSignedIn) {
         final user = await _userRepository.getUser();
         yield* _handleLogin(user.uid);
-        //yield Authenticated(uid: user.uid, name: 'None');
       } else {
         yield Unauthenticated();
       }
@@ -55,9 +57,21 @@ class AuthenticationBloc
   }
 
   Stream<AuthenticationState> _handleLogin(String uid) async* {
-    final DocumentSnapshot userSnapshot =
-        await Firestore.instance.collection('users').document(uid).get();
-    final UserModel user = UserModel.fromSnapshot(userSnapshot);
+    final DocumentReference userReference =
+        Firestore.instance.collection('users').document(uid);
+    final DocumentSnapshot userSnapshot = await userReference.get();
+    user = UserModel.fromSnapshot(userSnapshot);
+    Firestore.instance
+        .collection('user_access')
+        .where('userReference', isEqualTo: userReference)
+        .snapshots()
+        .listen((QuerySnapshot snapshot) {
+      Map<String, String> organizations = Map.fromIterable(snapshot.documents,
+          key: (doc) => doc.data['organizationReference'].documentID,
+          value: (doc) => 'admin');
+      print(organizations);
+      dispatch(Authorized(organizations));
+    });
     yield Authenticated(user: user);
   }
 }

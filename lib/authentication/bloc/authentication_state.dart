@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 import 'package:quartermaster/authentication/user.dart';
 
@@ -14,11 +15,14 @@ class Uninitialized extends AuthenticationState {
 
 class Authenticated extends AuthenticationState {
   final UserModel user;
+  final Map organizations;
 
-  Authenticated({this.user}) : super([user]);
+  Authenticated({@required this.user, this.organizations})
+      : super([user, organizations]);
 
   @override
-  String toString() => 'Authenticated { uid: ${user.uid} }';
+  String toString() =>
+      'Authenticated { uid: ${user.uid}, organizations: $organizations }';
 }
 
 class Unauthenticated extends AuthenticationState {

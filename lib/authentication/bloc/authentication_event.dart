@@ -11,6 +11,15 @@ class AppStarted extends AuthenticationEvent {
   String toString() => 'AppStarted';
 }
 
+class Authorized extends AuthenticationEvent {
+  final Map organizations;
+
+  Authorized(this.organizations);
+
+  @override
+  String toString() => 'Authorized';
+}
+
 class Login extends AuthenticationEvent {
   @override
   String toString() => 'Login';
