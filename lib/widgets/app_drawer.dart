@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quartermaster/authentication/authentication.dart';
+import 'package:quartermaster/authentication/user.dart';
 import 'package:quartermaster/widgets/not_implemented.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -15,16 +16,15 @@ class _AppDrawerState extends State<AppDrawer> {
     return BlocBuilder(
       bloc: authBloc,
       builder: (BuildContext context, AuthenticationState state) {
+        final UserModel user = (state as Authenticated).user;
         return Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
               UserAccountsDrawerHeader(
-                accountEmail: Text('email@domain.com'),
-                accountName: Text('Display Name'),
-                currentAccountPicture: CircleAvatar(
-                  child: Text('1'),
-                ),
+                accountEmail: Text(user.email),
+                accountName: Text(user.name),
+                currentAccountPicture: user.avatar(),
                 onDetailsPressed: () {},
                 otherAccountsPictures: <Widget>[
                   CircleAvatar(

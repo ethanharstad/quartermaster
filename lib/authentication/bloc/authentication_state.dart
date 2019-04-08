@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:quartermaster/authentication/user.dart';
 
 @immutable
 abstract class AuthenticationState extends Equatable {
@@ -12,13 +13,12 @@ class Uninitialized extends AuthenticationState {
 }
 
 class Authenticated extends AuthenticationState {
-  final String uid;
-  final String name;
+  final UserModel user;
 
-  Authenticated({this.uid, this.name}) : super([uid, name]);
+  Authenticated({this.user}) : super([user]);
 
   @override
-  String toString() => 'Authenticated { uid: $uid }';
+  String toString() => 'Authenticated { uid: ${user.uid} }';
 }
 
 class Unauthenticated extends AuthenticationState {

@@ -34,7 +34,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           drawer: AppDrawer(),
           body: Column(
             children: <Widget>[
-              Text('Welcome, ${(state as Authenticated).uid}'),
               GridView.extent(
                 shrinkWrap: true,
                 maxCrossAxisExtent: 150,
