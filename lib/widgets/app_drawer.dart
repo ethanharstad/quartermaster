@@ -17,6 +17,7 @@ class _AppDrawerState extends State<AppDrawer> {
       bloc: authBloc,
       builder: (BuildContext context, AuthenticationState state) {
         final UserModel user = (state as Authenticated).user;
+        final Map organizations = (state as Authenticated).organizations;
         return Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
@@ -26,14 +27,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 accountName: Text(user.name),
                 currentAccountPicture: user.avatar(),
                 onDetailsPressed: () {},
-                otherAccountsPictures: <Widget>[
-                  CircleAvatar(
-                    child: Text('2'),
-                  ),
-                  CircleAvatar(
-                    child: Text('3'),
-                  )
-                ],
+                otherAccountsPictures: _showOrganizations(organizations),
               ),
               ListTile(
                 leading: Icon(Icons.home),
@@ -71,5 +65,16 @@ class _AppDrawerState extends State<AppDrawer> {
         );
       },
     );
+  }
+
+  List<Widget> _showOrganizations(Map organizations) {
+    return organizations.keys.map((organizationId) {
+      return GestureDetector(
+        child: CircleAvatar(
+          child: Text(organizationId[0]),
+        ),
+        onTap: () => showNotImplementedDialog(context, 'operation switching'),
+      );
+    }).toList();
   }
 }
