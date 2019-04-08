@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-void showNotImplementedDialog(BuildContext context) {
+void showNotImplementedDialog(BuildContext context, [String feature]) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Not Implemented'),
-          content: Text('Sorry, this feature is not implemented yet.'),
+          content: Text(
+              'Sorry, ${feature ?? 'this feature'} is not implemented yet.'),
           actions: <Widget>[
             RaisedButton(
               child: Text(
