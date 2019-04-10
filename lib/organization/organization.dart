@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -23,11 +24,32 @@ class OrganizationModel {
         logoUrl = snapshot.data['logoUrl'],
         reference = snapshot.reference;
 
-  CircleAvatar avatar() {
-    return CircleAvatar(
-      child: Text(
-        abbreviation.toUpperCase(),
-      ),
-    );
+  Widget avatar() {
+    if (logoUrl != null) {
+      return FutureBuilder(
+        future: FirebaseStorage.instance
+            .getReferenceFromUrl(logoUrl)
+            .then((StorageReference ref) => ref.getDownloadURL()),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            return CircleAvatar(
+              backgroundImage: NetworkImage(snapshot.data),
+            );
+          } else {
+            return CircleAvatar(
+              child: Text(
+                abbreviation.toUpperCase(),
+              ),
+            );
+          }
+        },
+      );
+    } else {
+      return CircleAvatar(
+        child: Text(
+          abbreviation.toUpperCase(),
+        ),
+      );
+    }
   }
 }
