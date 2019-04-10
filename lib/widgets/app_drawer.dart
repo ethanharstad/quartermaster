@@ -26,34 +26,35 @@ class _AppDrawerState extends State<AppDrawer> {
                 accountEmail: Text(user.email),
                 accountName: Text(user.name),
                 currentAccountPicture: user.avatar(),
-                onDetailsPressed: () {},
+                onDetailsPressed: () =>
+                    showNotImplementedDialog(context, 'user profile'),
                 otherAccountsPictures: _showOrganizations(organizations),
               ),
               ListTile(
                 leading: Icon(Icons.home),
                 title: Text('Dashboard'),
-                onTap: () => showNotImplementedDialog(context),
+                onTap: () => Navigator.pushNamed(context, '/'),
               ),
               ListTile(
                 leading: Icon(Icons.list),
                 title: Text('Checklists'),
-                onTap: () => showNotImplementedDialog(context),
+                onTap: () => showNotImplementedDialog(context, 'checklists'),
               ),
               ListTile(
                 leading: Icon(Icons.assignment),
                 title: Text('Tasks'),
-                onTap: () => showNotImplementedDialog(context),
+                onTap: () => showNotImplementedDialog(context, 'tasks'),
               ),
               ListTile(
                 leading: Icon(Icons.schedule),
                 title: Text('Schedule'),
-                onTap: () => showNotImplementedDialog(context),
+                onTap: () => showNotImplementedDialog(context, 'scheduling'),
               ),
               Divider(),
               ListTile(
                 leading: Icon(Icons.settings),
                 title: Text('Settings'),
-                onTap: () => showNotImplementedDialog(context),
+                onTap: () => showNotImplementedDialog(context, 'settings'),
               ),
               ListTile(
                 leading: Icon(Icons.exit_to_app),
@@ -74,6 +75,8 @@ class _AppDrawerState extends State<AppDrawer> {
           child: Text(organizationId[0]),
         ),
         onTap: () => showNotImplementedDialog(context, 'operation switching'),
+        onLongPress: () => Navigator.pushNamed(context, '/organization',
+            arguments: organizationId),
       );
     }).toList();
   }
